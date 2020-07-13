@@ -4,42 +4,19 @@
 
 {% block content %}
 <div class="row">
+    {% for product in products %}
     <div class="col-lg-4">
         <img class="thumbnail" src="{% static 'images/placeholder.png' %}" alt="placeholder">
         <div class="box-element product">
             <h6>
-                <strong>Product</strong>
+                <strong>{{ product.name }}</strong>
             </h6>
             <hr>
             <button class="btn btn-outline-secondary add-btn">Add to cart</button>
             <a class="btn btn-outline-success" href="#">View</a>
-            <h4 class="store-price">&#x20B9; 20</h4>
+            <h4 class="store-price">&#x20B9; {{ product.price|floatformat:2 }}</h4>
         </div>
     </div>
-    <!-- Dummy data -->
-    <div class="col-lg-4">
-        <img class="thumbnail" src="{% static 'images/placeholder.png' %}" alt="placeholder">
-        <div class="box-element product">
-            <h6>
-                <strong>Product</strong>
-            </h6>
-            <hr>
-            <button class="btn btn-outline-secondary add-btn">Add to cart</button>
-            <a class="btn btn-outline-success" href="#">View</a>
-            <h4 class="store-price"> &#x20B9; 20</h4>
-        </div>
-    </div>
-    <div class="col-lg-4">
-        <img class="thumbnail" src="{% static 'images/placeholder.png' %}" alt="placeholder">
-        <div class="box-element product">
-            <h6>
-                <strong>Product</strong>
-            </h6>
-            <hr>
-            <button class="btn btn-outline-secondary add-btn">Add to cart</button>
-            <a class="btn btn-outline-success" href="#">View</a>
-            <h4 class="store-price"> &#x20B9; 20</h4>
-        </div>
-    </div>
+    {% endfor %}
 </div>
 {% endblock content %}
