@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from django.shortcuts import render
 from .models import Customer, Order, OrderItem, Product, ShippingAddress
-from .utils import cartData, cookieCart
+from .utils import cartData, cookieCart, guestOrder
 import datetime
 import json
 
@@ -21,13 +21,11 @@ def cart(request):
     order = data['order']
     items = data['items']
 
-
     context = {'items':items, 'order':order, 'cartItems':cartItems, 'shipping':False}
     return render(request, 'store/cart.html', context)
 
 
 def checkout(request):
-    
     data = cartData(request)
     cartItems = data['cartItems']
     order = data['order']
@@ -59,6 +57,9 @@ def updateItem(request):
     return JsonResponse('Item was added', safe=False)
 
 
+from django.views.decorators.csrf import csrf_exempt
+
+@csrf_exempt
 def processOrder(request):
     # print('Data:', request.body)
     transaction_id = datetime.datetime.now().timestamp()
@@ -67,23 +68,24 @@ def processOrder(request):
     if request.user.is_authenticated:
         customer = request.user.customer
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
-        total = float(data['form']['total'])
-        order.transaction_id = transaction_id
-
-        if total == order.get_cart_total:
-            order.complete = True
-        order.save()
-
-        if order.shipping == True:
-            ShippingAddress.objects.create(
-                customer=customer,
-                order=order,
-                address=data['shipping']['address'],
-                city=data['shipping']['city'],
-                state=data['shipping']['state'],
-                zipcode=data['shipping']['zipcode'],
-            )
-
+        
     else:
-        print("User is not logged in")
+        customer, order = guestOrder(request, data)
+
+    total = float(data['form']['total'])
+    order.transaction_id = transaction_id
+
+    if total == order.get_cart_total:
+        order.complete = True
+    order.save()
+
+    if order.shipping == True:
+        ShippingAddress.objects.create(
+            customer=customer,
+            order=order,
+            address=data['shipping']['address'],
+            city=data['shipping']['city'],
+            state=data['shipping']['state'],
+            zipcode=data['shipping']['zipcode'],
+        )
     return JsonResponse('Payment complete', safe=False)
