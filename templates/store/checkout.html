@@ -3,5 +3,110 @@
 {% load static %}
 
 {% block content %}
-<h3>Checkout</h3>
+<div class="row">
+    <!-- Left side of the page -->
+    <div class="col-lg-6">
+        <div class="box-element" id="form-wrapper">
+            <form action="#" id="form">
+                <div id="user-info">
+                    <div class="form-field">
+                        <input
+                            type="text"
+                            name="name"
+                            class="form-control"
+                            placeholder="Name"
+                            required
+                        >
+                    </div>
+                    <div class="form-field">
+                        <input
+                            type="email"
+                            name="email"
+                            class="form-control"
+                            placeholder="Email"
+                            required
+                        >
+                    </div>
+                </div>
+                <div id="shipping-info">
+                    <hr>
+                    <p>Shipping Information:</p>
+                    <hr>
+                    <div class="form-field">
+                        <input
+                            type="text"
+                            name="address"
+                            class="form-control"
+                            placeholder="Address"
+                        >
+                    </div>
+                    <div class="form-field">
+                        <input
+                            type="text"
+                            name="city"
+                            class="form-control"
+                            placeholder="City"
+                        >
+                    </div>
+                    <div class="form-field">
+                        <input
+                            type="text"
+                            name="state"
+                            class="form-control"
+                            placeholder="State"
+                        >
+                    </div>
+                    <div class="form-field">
+                        <input
+                            type="text"
+                            name="zipcode"
+                            class="form-control"
+                            placeholder="Zipcode"
+                        >
+                    </div>
+                    <div class="form-field">
+                        <input
+                            type="text"
+                            name="country"
+                            class="form-control"
+                            placeholder="Country"
+                        >
+                    </div>
+                </div>
+                <hr>
+                <input
+                    id="form-button"
+                    class="btn btn-success btn-block"
+                    type="submit"
+                    value="Continue"
+                >
+            </form>
+        </div>
+        <br>
+        <div class="box-element hidden" id="payment-info">
+            <small>Paypal Options</small>
+        </div>
+    </div>
+    <!-- Right side of the page -->
+    <div class="col-lg-6">
+        <div class="box-element">
+            <a href="{% url 'cart' %}" class="btn btn-outline-dark">&#x2190; Back to Cart</a>
+            <hr>
+            <h3>Order Summary</h3>
+            <hr>
+            <div class="cart-row">
+                <div style="flex: 2;">
+                    <img src="{% static 'images/placeholder.png' %}" alt="" class="row-image">
+                </div>
+                <div style="flex: 2;">Product 1</div>
+                <div style="flex: 1;">&#x20B9; 20.00</div>
+                <div style="flex: 1;">x2</div>
+            </div>
+            <h5>Items: 2</h5>
+            <h5>Total:
+                <strong>&#x20B9; 40.00</strong>
+            </h5>
+        </div>
+    </div>
+</div>
 {% endblock content %}
