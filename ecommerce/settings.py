@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # AWS Storage app
+    'storages',
+
     # User created apps
     'store',
 ]
